@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Faculty Dashboard</h1>
+            <p>Manage attendance records.</p>
+        </header>
+
+        <div class="content">
+            <h2>Attendance Records</h2>
+
+            {% if attendance_files %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for file in attendance_files %}
+                    <tr>
+                        <td>{{ file.split('_')[1].split('.')[0] }}</td>
+                        <td>
+                            <form action="{{ url_for('faculty_dashboard') }}" method="POST">
+                                <input type="hidden" name="file_to_delete" value="{{ file }}">
+                                <button type="submit" class="delete-button">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p>No attendance records found.</p>
+            {% endif %}
+
+            <a href="{{ url_for('logout') }}" class="logout-button">Logout</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Recognition Attendance</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Face Recognition Attendance</h1>
+            <p>Register your attendance below.</p>
+        </header>
+
+        <div class="content">
+            <!-- Left Section: Buttons and Faculty Login -->
+            <div class="left-section">
+                <h2>Actions</h2>
+
+                <form action="{{ url_for('start_webcam') }}" method="GET">
+                    <button type="submit" class="action-button">Register Attendance</button>
+                </form>
+
+                <form action="{{ url_for('end_webcam') }}" method="GET">
+                    <button type="submit" class="action-button">End Session</button>
+                </form>
+
+                <!-- Faculty Login -->
+                <div class="login-container">
+                    <h2>Faculty Login</h2>
+                    <form action="{{ url_for('login') }}" method="POST">
+                        <label for="username">Username:</label>
+                        <input type="text" id="username" name="username" required>
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" required>
+                        <button type="submit" class="login-button">Login</button>
+                    </form>
+                </div>
+
+                {% if message %}
+                <div class="message">
+                    <p>{{ message }}</p>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Right Section: Webcam Feed -->
+            <div class="right-section">
+                <h2>Webcam Feed</h2>
+                <img id="webcam" src="{{ url_for('video_feed') }}" alt="Webcam Feed">
+            </div>
+        </div>
+    </div>
+</body>
+</html>
